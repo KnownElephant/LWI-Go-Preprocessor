@@ -23,6 +23,7 @@ class AEP_rasterize:
             weight_list_file: str,
             resolution: float,
             bounding_box: list,
+            output_directory: str = "."
     ):
         self.__geometry = HecGeometry(geometry_file)
         self.__triangles = Triangulation(self.__geometry)
@@ -30,6 +31,7 @@ class AEP_rasterize:
         self.__weight_list_file = weight_list_file
         self.__bounding_box = bounding_box
         self.__resolution = resolution
+        self.__output_directory = output_directory
         self.__xmax = max(self.__bounding_box[0], self.__bounding_box[2])
         self.__xmin = min(self.__bounding_box[0], self.__bounding_box[2])
         self.__ymax = max(self.__bounding_box[1], self.__bounding_box[3])
@@ -118,7 +120,7 @@ class AEP_rasterize:
             z = data_for_raster[0](self.__xg, self.__yg)
 
 
-            raster_filename = "AEP_"+str(AEP_value)+"_wse.tif"
+            raster_filename = self.__output_directory+"/AEP_"+str(AEP_value)+"_wse.tif"
             if os.path.exists(raster_filename):
                 os.remove(raster_filename)
             
