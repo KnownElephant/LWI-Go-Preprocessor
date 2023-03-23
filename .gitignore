@@ -1,2 +1,5 @@
 wse_data
 wse_data_test.csv
+__pycache__
+wse_data.7z
+*.tif
