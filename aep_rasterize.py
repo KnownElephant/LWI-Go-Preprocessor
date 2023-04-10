@@ -15,7 +15,9 @@ import os
 
 
 class AEP_rasterize:
-
+    """Class which handles extracting maximum WSE data from mini-hdf files and pulling aep values
+    out of them to create raster files
+    """
     def __init__(
             self,
             geometry_file: str,
@@ -25,6 +27,18 @@ class AEP_rasterize:
             bounding_box: list,
             output_directory: str = "."
     ):
+        """
+        Constructor for the aep_rasterize object
+
+        Args:
+            geometry_file: a filepath to a .hdf file containing a hecras geometry
+            results_directory: a filepath to a directory containing mini-hdf file outputs from
+            HEC_RAS Runs
+            weight_list_file: a filepaath to a .csv file containing the weights for each storm
+            resolution: the resolution for the desired raster output
+            bounding_box: the bounding box for the associated raster output
+            output_directory: a filepath to the directory where the output files will be saved
+        """
         self.__geometry = HecGeometry(geometry_file)
         self.__triangles = Triangulation(self.__geometry)
         self.__results_directory = results_directory
@@ -51,6 +65,7 @@ class AEP_rasterize:
     ) -> mpl_LinearTriInterpolator:
         """
         Construct a linear interpolator for the given variable and results
+        Code take from hecras class (author zcobbell)
 
         Args:
             flow_area: Flow area object
@@ -84,7 +99,11 @@ class AEP_rasterize:
         self, 
         AEP: list
     ):
-        
+        """Creates rasters corresponding to AEP values for a set of storm runs
+
+        Returns:
+            None
+        """
         from osgeo import gdal
         from pyproj import CRS
         import logging
